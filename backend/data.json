@@ -1,0 +1,429 @@
+{
+  "cars": [
+    {
+      "id": 1,
+      "name": "Volkswagen Polo",
+      "type": "city",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 2,
+      "price": 32,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ],
+      "updatedAt": "2026-05-19T21:46:36.474Z"
+    },
+    {
+      "id": 2,
+      "name": "Toyota Yaris Hybrid",
+      "type": "city",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 2,
+      "price": 36,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Skoda Octavia",
+      "type": "city",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 3,
+      "price": 44,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Dacia Duster",
+      "type": "suv",
+      "transmission": "Manual",
+      "seats": 5,
+      "bags": 4,
+      "price": 48,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Hyundai Tucson",
+      "type": "suv",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 4,
+      "price": 58,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Toyota RAV4",
+      "type": "suv",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 4,
+      "price": 68,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Ford Transit Custom",
+      "type": "van",
+      "transmission": "Manual",
+      "seats": 9,
+      "bags": 8,
+      "price": 89,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Mercedes Vito",
+      "type": "van",
+      "transmission": "Automatic",
+      "seats": 8,
+      "bags": 7,
+      "price": 112,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Mercedes C-Class",
+      "type": "luxury",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 3,
+      "price": 76,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "BMW 5 Series",
+      "type": "luxury",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 3,
+      "price": 94,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Fiat 500",
+      "type": "city",
+      "transmission": "Manual",
+      "seats": 4,
+      "bags": 1,
+      "price": 29,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Renault Clio",
+      "type": "city",
+      "transmission": "Manual",
+      "seats": 5,
+      "bags": 2,
+      "price": 33,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Peugeot 208",
+      "type": "city",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 2,
+      "price": 35,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Opel Corsa",
+      "type": "city",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 2,
+      "price": 34,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Volkswagen Golf",
+      "type": "city",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 3,
+      "price": 42,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Nissan Qashqai",
+      "type": "suv",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 4,
+      "price": 55,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Kia Sportage",
+      "type": "suv",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 4,
+      "price": 57,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Volkswagen Tiguan",
+      "type": "suv",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 4,
+      "price": 72,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Jeep Renegade",
+      "type": "suv",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 3,
+      "price": 64,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Range Rover Evoque",
+      "type": "suv",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 3,
+      "price": 118,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 21,
+      "name": "Mercedes GLC",
+      "type": "suv",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 4,
+      "price": 124,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Opel Vivaro",
+      "type": "van",
+      "transmission": "Manual",
+      "seats": 9,
+      "bags": 8,
+      "price": 96,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 23,
+      "name": "Volkswagen Caravelle",
+      "type": "van",
+      "transmission": "Automatic",
+      "seats": 8,
+      "bags": 7,
+      "price": 119,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Audi A6",
+      "type": "luxury",
+      "transmission": "Automatic",
+      "seats": 5,
+      "bags": 3,
+      "price": 102,
+      "available": true,
+      "locations": [
+        "Tirana Airport",
+        "Tirana City Center",
+        "Durres Port",
+        "Sarande Ferry Terminal",
+        "Vlore Promenade"
+      ]
+    }
+  ],
+  "reservations": [],
+  "rentalRequests": [
+    {
+      "id": 1,
+      "createdAt": "2026-05-27T14:44:06.275Z",
+      "status": "new",
+      "carId": 1,
+      "carName": "Volkswagen Polo",
+      "name": "da",
+      "email": "daw@mail.com",
+      "phone": "423",
+      "pickupDate": "2026-05-29",
+      "returnDate": "2026-05-31",
+      "location": "Tirana Airport"
+    }
+  ]
+}

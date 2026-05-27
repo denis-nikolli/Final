@@ -1,0 +1,245 @@
+.fleet-page {
+    min-height: calc(100vh - 82px);
+    padding: clamp(48px, 6vw, 80px) clamp(20px, 8vw, 120px);
+    background:
+        linear-gradient(rgba(255, 250, 246, 0.92), rgba(255, 250, 246, 0.94)),
+        repeating-radial-gradient(circle at 18% 10%,
+            rgba(217, 4, 41, 0.045) 0,
+            rgba(217, 4, 41, 0.045) 1px,
+            transparent 2px,
+            transparent 42px);
+}
+
+.fleet-database {
+    display: grid;
+    gap: 32px;
+}
+
+/* Controls */
+
+.fleet-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.fleet-type-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.type-filter-btn {
+    min-height: 40px;
+    padding: 0 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: white;
+    color: var(--ink);
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.type-filter-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.type-filter-btn.is-active {
+    border-color: var(--red);
+    background: var(--red);
+    color: white;
+}
+
+.fleet-location-filter label {
+    display: grid;
+    gap: 4px;
+}
+
+.fleet-location-filter span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.fleet-location-filter select {
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: white;
+    color: var(--ink);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* Count & status */
+
+.fleet-count {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.fleet-status {
+    padding: 28px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    color: var(--muted);
+    font-weight: 800;
+}
+
+.fleet-error {
+    color: var(--red);
+}
+
+/* Pagination */
+
+.fleet-pagination {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.page-btn {
+    min-width: 42px;
+    min-height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: white;
+    color: var(--ink);
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.page-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.page-btn.is-active {
+    border-color: var(--red);
+    background: var(--red);
+    color: white;
+}
+
+/* Rental modal */
+
+.rental-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(16, 17, 20, 0.62);
+    overflow-y: auto;
+}
+
+.rental-dialog {
+    position: relative;
+    width: min(680px, 100%);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding: clamp(24px, 4vw, 42px);
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+.rental-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: white;
+    color: var(--ink);
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.rental-form-heading {
+    margin-bottom: 26px;
+    padding-right: 52px;
+}
+
+.rental-form-heading h2 {
+    font-size: clamp(28px, 4vw, 42px);
+}
+
+.rental-form-heading p:last-child {
+    margin-top: 8px;
+    color: var(--muted);
+}
+
+.rental-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.rental-form label {
+    display: grid;
+    gap: 8px;
+}
+
+.rental-form label span {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.rental-form input,
+.rental-form select {
+    width: 100%;
+    min-height: 50px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    padding: 0 14px;
+    border-radius: 6px;
+}
+
+.rental-form-wide {
+    grid-column: 1 / -1;
+}
+
+.rental-success {
+    padding: 12px 0;
+}
+
+.rental-success h2 {
+    margin: 12px 0 16px;
+    font-size: clamp(28px, 4vw, 42px);
+}
+
+.rental-success p {
+    color: var(--muted);
+    font-size: 17px;
+}
+
+/* Responsive */
+
+@media (max-width: 720px) {
+    .fleet-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .rental-form {
+        grid-template-columns: 1fr;
+    }
+}
