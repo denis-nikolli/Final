@@ -1,8 +1,8 @@
 import "./index.css"
 import { useState, useEffect } from "react"
 import { useSearchParams } from "react-router"
-import Navigation from "../../components/Navigation"
-import Footer from "../../components/Footer"
+import Navigation from "../../components/navigation"
+import Footer from "../../components/footer"
 
 const LOCATIONS = [
     "Tirana Airport",

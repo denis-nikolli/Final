@@ -1,9 +1,9 @@
 import "./index.css"
 import { useState } from "react"
 import { useNavigate, Link } from "react-router"
-import Navigation from "../../components/Navigation"
-import Header from "../../components/Header"
-import Footer from "../../components/Footer"
+import Navigation from "../../components/navigation"
+import Header from "../../components/header"
+import Footer from "../../components/footer"
 
 const Home = () => {
     const navigate = useNavigate()

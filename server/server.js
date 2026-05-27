@@ -92,7 +92,7 @@ function saveData() {
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.get("/api/health", (req, res) => {
   res.json({
@@ -352,7 +352,7 @@ app.patch("/api/admin/rental-requests/:id", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
 });
 
 app.listen(PORT, () => {

@@ -1,7 +1,7 @@
 import "./index.css"
 import { useState } from "react"
-import Navigation from "../../components/Navigation"
-import Footer from "../../components/Footer"
+import Navigation from "../../components/navigation"
+import Footer from "../../components/footer"
 
 const Contact = () => {
     const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" })

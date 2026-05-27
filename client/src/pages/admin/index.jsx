@@ -1,7 +1,7 @@
 import "./index.css"
 import { useState, useEffect, useCallback } from "react"
-import Navigation from "../../components/Navigation"
-import Footer from "../../components/Footer"
+import Navigation from "../../components/navigation"
+import Footer from "../../components/footer"
 
 const STATUS_OPTIONS = ["new", "confirmed", "cancelled", "completed"]
 
