@@ -6,9 +6,19 @@ footer {
     display: grid;
     grid-template-columns: 1.2fr 1fr 1fr;
     gap: 32px;
-    padding: 70px clamp(20px, 8vw, 120px);
+    padding: 70px clamp(20px, 8vw, 120px) 32px;
     background: var(--ink);
     color: white;
+}
+
+.footer-bottom {
+    grid-column: 1 / -1;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    font-size: 13px;
 }
 
 footer .brand {

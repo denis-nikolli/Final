@@ -85,9 +85,10 @@ const storedData = readStoredData();
 const cars = storedData?.cars || defaultCars;
 const rentalRequests = storedData?.rentalRequests || [];
 const reservations = storedData?.reservations || [];
+const contacts = storedData?.contacts || [];
 
 function saveData() {
-  fs.writeFileSync(dataFile, JSON.stringify({ cars, reservations, rentalRequests }, null, 2));
+  fs.writeFileSync(dataFile, JSON.stringify({ cars, reservations, rentalRequests, contacts }, null, 2));
 }
 
 app.use(cors());
@@ -250,6 +251,22 @@ app.get("/api/rental-requests", (req, res) => {
   res.json({ count: rentalRequests.length, requests: rentalRequests });
 });
 
+app.post("/api/contact", (req, res) => {
+  const name = String(req.body.name || "").trim();
+  const email = String(req.body.email || "").trim();
+  const phone = String(req.body.phone || "").trim();
+  const message = String(req.body.message || "").trim();
+
+  if (!name || !email || !message) {
+    res.status(400).json({ ok: false, message: "Name, email, and message are required." });
+    return;
+  }
+
+  contacts.push({ id: contacts.length + 1, createdAt: new Date().toISOString(), name, email, phone, message });
+  saveData();
+  res.status(201).json({ ok: true });
+});
+
 app.get("/api/admin/dashboard", (req, res) => {
   res.json({
     reservations: {
@@ -274,6 +291,10 @@ app.get("/api/admin/dashboard", (req, res) => {
     cars: {
       count: cars.length,
       items: cars,
+    },
+    contacts: {
+      count: contacts.length,
+      items: contacts,
     },
   });
 });

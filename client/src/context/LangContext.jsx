@@ -1,0 +1,278 @@
+import { createContext, useContext, useState } from 'react'
+
+const translations = {
+    en: {
+        nav: {
+            home: "Home", fleet: "Fleet", blog: "Blog", about: "About Us",
+            contact: "Contacts", faq: "FAQ", checkin: "Online Check-in",
+            loginRegister: "Login / Register", hello: "Hello", logout: "Logout",
+        },
+        header: {
+            eyebrow: "Rent a car in Albania",
+            h1red: "Save 15%", h1rest: " on your booking",
+            copy: "Reserve now and pay online to automatically receive a discount at checkout.",
+        },
+        home: {
+            locationLabel: "Pick-up location", pickupLabel: "Pick-up date",
+            returnLabel: "Return date", searchBtn: "Search Cars",
+            bookingNote: "Free airport handover, unlimited support, and no hidden cleaning fees.",
+            discountNote: "Discount SAVE15 applied — 15% off your rental!",
+            bannerTag: "Save 15% Now",
+            bannerH2: "Pay online and save instantly on your Albania rental.",
+            bannerDesc: "Reserve your vehicle today, pay securely online, and receive an immediate discount before you start the road trip.",
+            claimBtn: "Claim Discount", appliedBtn: "Discount Applied!",
+            fleetEyebrow: "Fleet", fleetH2: "Popular rentals", viewAll: "View all cars",
+            cityLabel: "City car", sedanLabel: "Sedan", rent: "Rent",
+            routeEyebrow: "Signature route",
+            routeH2: "Tirana to the Albanian Riviera",
+            routeDesc: "Cruise through Vlore, climb Llogara Pass, stop in Dhermi, and end near Ksamil with turquoise coves and flexible return options.",
+            stat1: "scenic drive", stat2: "ideal trip", routeBtn: "See Driving Guides",
+            destEyebrow: "Where your rental takes you", destH2: "Albania highlights",
+            tiranaSub: "Easy airport pickup, cafes, museums, and day trips to Kruje.",
+            thethSub: "Mountain villages, waterfalls, and dramatic northern roads.",
+            ksamil: "Beach coves, island views, and relaxed Riviera driving.",
+            reviewsEyebrow: "Trusted by travelers",
+            reviewsH2: "Simple handovers, clean cars, better road trips.",
+            r1title: '"The Duster was perfect for Theth."',
+            r1body: "Airport pickup took ten minutes and the team marked every stop we wanted on the map.",
+            r1name: "Elena M.",
+            r2title: '"No surprise charges."',
+            r2body: "We drove from Tirana to Sarande and returned the car in Vlore. Very smooth.",
+            r2name: "Arben K.",
+            r3title: '"The photos finally match the trip."',
+            r3body: "Great car, fast replies, and the Riviera route advice was genuinely useful.",
+            r3name: "Julia R.",
+        },
+        fleet: {
+            eyebrow: "Fleet", h1: "Our Fleet of Modern Rental Cars",
+            locationLabel: "Location", allLocations: "All locations", allCars: "All Cars",
+            loading: "Loading cars…",
+            loadError: "Could not load cars. Make sure the backend is running.",
+            noMatch: "No cars match your filters.",
+            available: "available", carsLabel: "car", carsLabelPlural: "cars",
+            seats: "seats", bags: "bags", rent: "Rent", perDay: "/day",
+            modalEyebrow: "Rental request",
+            fullName: "Full name", email: "Email", phone: "Phone / WhatsApp",
+            pickupLocation: "Pick-up location", pickupDate: "Pick-up date", returnDate: "Return date",
+            submitBtn: "Submit Request", submitting: "Sending…",
+            successEyebrow: "Request sent", successH2: "We’ll be in touch shortly.",
+            successDesc1: "Your rental request for", successDesc2: "has been received. Our team will confirm your booking by email.",
+            closeBtn: "Close", formError: "Something went wrong. Please try again.",
+        },
+        about: {
+            eyebrow: "About Us", h1: "About Us",
+            whoEyebrow: "Who we are",
+            whoH2: "Local car rental for travelers who want Albania to feel easy.",
+            whoDesc: "Rent a Car helps visitors move between Tirana Airport, Durres, Vlore, Sarande, and the mountain routes with clean cars, clear pricing, and practical route advice from a local team.",
+            c1class: "Airport handover", c1h3: "Fast pickup",
+            c1desc: "Meet the car at the terminal or city center with documents checked before you arrive.",
+            c2class: "Fleet care", c2h3: "Clean, ready cars",
+            c2desc: "City cars, SUVs, vans, and premium models prepared for Albanian roads and luggage needs.",
+            c3class: "Route support", c3h3: "Local guidance",
+            c3desc: "Get simple advice for Riviera drives, Theth routes, parking, ferry arrivals, and return options.",
+            whyH2: "Why choose us",
+            w1h3: "Unlimited Mileage", w1desc: "Explore Albania from coast to mountains with total freedom and flexible daily routes.",
+            w2h3: "Travel Assistance", w2desc: "We support you whenever the unexpected happens, from route questions to roadside help.",
+            w3h3: "Complete Protection", w3desc: "Drive with confidence using clear insurance options and straightforward rental terms.",
+            w4h3: "Effortless Booking", w4desc: "Book your Albania rental car in minutes with clear pricing and no hidden fees.",
+        },
+        contact: {
+            eyebrow: "Contacts", h1: "Contacts",
+            officesH2: "Our Offices", officesDesc: "Find the location that best serves you.",
+            contactEyebrow: "Contact",
+            contactH2: "Book, change, or confirm your rental.",
+            contactDesc: "Our team can help with airport pickup, delivery times, border crossing questions, and car availability.",
+            fullName: "Full name", email: "Email", phone: "Phone / WhatsApp", message: "Message",
+            sendBtn: "Send Message", sending: "Sending…",
+            sent: "Message sent! We’ll get back to you soon.",
+            formError: "Something went wrong. Please try again.",
+        },
+        faq: {
+            eyebrow: "Rental offers & FAQ", h1: "Better rates for longer Albania road trips.",
+            offersEyebrow: "Current offers", offersH2: "Save more on your trip",
+            faqEyebrow: "FAQ", faqH2: "Frequently asked questions",
+            offers: [
+                { title: "Weekly Saver", desc: "Save 12% on rentals of seven days or more. Perfect for coast-to-mountain trips." },
+                { title: "Airport Fast Lane", desc: "Send documents before arrival and your car can be ready outside arrivals." },
+                { title: "One-way Return", desc: "Pick up in Tirana and return in Vlore, Sarande, Durres, or Shkoder." },
+            ],
+            faqs: [
+                { q: "What documents do I need to rent a car?", a: "A valid driving licence, a passport or national ID, and a credit or debit card for the deposit." },
+                { q: "Is there a minimum rental age?", a: "Drivers must be at least 21 years old. Drivers under 25 may be subject to a young driver surcharge." },
+                { q: "Can I return the car at a different location?", a: "Yes. We offer one-way rentals between Tirana, Durres, Vlore, Sarande, and Shkoder." },
+                { q: "Is mileage unlimited?", a: "All our rentals include unlimited mileage — drive as far as you need across Albania." },
+                { q: "How does the online discount work?", a: "Book and pay online to automatically receive 15% off your rental total. No code needed at checkout." },
+                { q: "What fuel policy applies?", a: "Cars are provided with a full tank and should be returned full. Fuel top-up charges apply if not refuelled." },
+            ],
+        },
+        blog: {
+            eyebrow: "Driving guides", h1: "Routes that make the car rental feel worth it.",
+            routesEyebrow: "Curated routes", routesH2: "Albania by road",
+            totalDrive: "total drive", idealTrip: "ideal trip",
+            tipsEyebrow: "Driving tips", tipsH2: "Know before you go",
+            rentForRoute: "Rent a car for this route",
+            routes: [
+                { title: "Tirana to the Albanian Riviera", distance: "305 km", duration: "4–7 days", desc: "Cruise through Vlore, climb Llogara Pass, stop in Dhermi, and end near Ksamil with turquoise coves and flexible return options.", highlights: ["Vlore city stop", "Llogara Pass (1027 m)", "Dhermi beach", "Ksamil coves"] },
+                { title: "Tirana to Theth", distance: "190 km", duration: "2–3 days", desc: "Head north through Shkoder and into the Albanian Alps. Theth offers dramatic gorges, a waterfall, and a blue-eye pool.", highlights: ["Shkoder Old Town", "Komani Lake ferry", "Valbona Valley", "Theth waterfall"] },
+                { title: "Tirana to Berat & Gjirokaster", distance: "260 km", duration: "2–4 days", desc: "Two UNESCO-listed ‘cities of a thousand windows’ in a single loop through central and southern Albania.", highlights: ["Berat Castle", "Cobo Winery", "Gjirokaster Bazaar", "Blue Eye Spring"] },
+            ],
+            tips: [
+                { h3: "Mountain passes", p: "Llogara Pass and the Theth road require confidence on narrow switchbacks. An SUV is recommended for both." },
+                { h3: "Fuel stations", p: "Fill up before entering remote mountain areas. Major towns have plenty of stations; rural stretches do not." },
+                { h3: "One-way returns", p: "You can pick up in Tirana and return in Vlore, Sarande, or Durres. Ideal for a linear Riviera route." },
+            ],
+        },
+        footer: {
+            tagline: "Car rental in Tirana, Durres, Vlore, Sarande, and beyond.",
+            book: "Book", fleet: "Fleet", guides: "Guides", offers: "Offers", contact: "Contact",
+        },
+    },
+    al: {
+        nav: {
+            home: "Kryefaqja", fleet: "Flotë", blog: "Blog", about: "Rreth Nesh",
+            contact: "Kontaktet", faq: "FAQ", checkin: "Check-in Online",
+            loginRegister: "Hyrje / Regjistrim", hello: "Mirësevini", logout: "Dilni",
+        },
+        header: {
+            eyebrow: "Makinë me qira në Shqipëri",
+            h1red: "Kurseni 15%", h1rest: " në rezervimin tuaj",
+            copy: "Rezervoni tani dhe paguani online për të marrë automatikisht zbritje gjatë pagësës.",
+        },
+        home: {
+            locationLabel: "Vendmarrja", pickupLabel: "Data e marrjes",
+            returnLabel: "Data e kthimit", searchBtn: "Kërko Makina",
+            bookingNote: "Dorëzim falas në aeroport, mbështejte pa kufi dhe pa tarifa të fshehura pastrimi.",
+            discountNote: "Zbritja SAVE15 u aplikua — 15% ulje nga qiraja juaj!",
+            bannerTag: "Kurseni 15% Tani",
+            bannerH2: "Paguani online dhe kurseni menjëherë në qiranë tuaj në Shqipëri.",
+            bannerDesc: "Rezervoni automjetin tuaj sot, paguani në mënyrë të sigurt online dhe merrni menjëherë zbritje para fillimit të udhëtimit.",
+            claimBtn: "Merre Zbritjen", appliedBtn: "Zbritja u Aplikua!",
+            fleetEyebrow: "Flotë", fleetH2: "Qiratë më të njohura", viewAll: "Shiko të gjitha makinat",
+            cityLabel: "Makinë qyteti", sedanLabel: "Sedan", rent: "Qiraje",
+            routeEyebrow: "Rruga kryesore",
+            routeH2: "Tirana deri te Riviera Shqiptare",
+            routeDesc: "Kaloni nëpër Vlorë, ngjituni në Llogarã, ndaloni në Dhërmi dhe mbaroni pranë Ksamilit me gjiret torquoise dhe opsione kthimi fleksibël.",
+            stat1: "shëtitje panoramike", stat2: "udhëtim ideal", routeBtn: "Shiko Guidat e Drejtimit",
+            destEyebrow: "Ku ju çon qiraja juaj", destH2: "Pikat kryesore të Shqipërisë",
+            tiranaSub: "Marrje e lehtë në aeroport, kafene, muze dhe ekskursione ditore në Krujë.",
+            thethSub: "Fshatra malesh, ujëvara dhe rrugë dramatike veriore.",
+            ksamil: "Gjire bregdetare, pamje ishulli dhe drejtim i relaksuar i Rivierës.",
+            reviewsEyebrow: "I besuar nga udhëtarët",
+            reviewsH2: "Dorëzime të thjeshta, makina të pastra, udhëtime më të mira rrugësh.",
+            r1title: "“Dusteri ishte perfekt për Thethin.”",
+            r1body: "Marrja në aeroport zëritë dhjetë minuta dhe ekipi shënoi çdo ndërprerje në hartë.",
+            r1name: "Elena M.",
+            r2title: "“Asnjë tarifë e papritur.”",
+            r2body: "Drejtuam nga Tirana në Sarandë dhe kthyem makinën në Vlorë. Shumë qetëso.",
+            r2name: "Arben K.",
+            r3title: "“Fotot më në fund përputhen me udhëtimin.”",
+            r3body: "Makinë e shkëlqyer, përgjigje të shpejta dhe këshillat e rrugës së Rivierës ishin vërtet të dobishme.",
+            r3name: "Julia R.",
+        },
+        fleet: {
+            eyebrow: "Flotë", h1: "Flota Jonë e Makinave Moderne me Qira",
+            locationLabel: "Vendndodhja", allLocations: "Të gjitha vendet", allCars: "Të Gjitha",
+            loading: "Po ngarkohen makinat…",
+            loadError: "Nuk mund të ngarkohen makinat. Sigurohuni që serveri të jetë duke punuar.",
+            noMatch: "Asnjë makinë nuk përputhet me filtrat tuaj.",
+            available: "në dispozicion", carsLabel: "makinë", carsLabelPlural: "makina",
+            seats: "vende", bags: "valixhe", rent: "Qiraje", perDay: "/ditë",
+            modalEyebrow: "Kërkesë qiraje",
+            fullName: "Emri i plotë", email: "Email", phone: "Telefon / WhatsApp",
+            pickupLocation: "Vendmarrja", pickupDate: "Data e marrjes", returnDate: "Data e kthimit",
+            submitBtn: "Dërgo Kërkesën", submitting: "Po dërgon…",
+            successEyebrow: "Kërkesa u dërgu", successH2: "Do t’ju kontaktojmë së shpejti.",
+            successDesc1: "Kërkesa juaj e qirasë për", successDesc2: "u pranua. Ekipi ynë do të konfirmojë rezervimin tuaj me email.",
+            closeBtn: "Mbyll", formError: "Diçka shkoi keq. Ju lutemi provoni përsëri.",
+        },
+        about: {
+            eyebrow: "Rreth Nesh", h1: "Rreth Nesh",
+            whoEyebrow: "Kush jemi ne",
+            whoH2: "Qira makinash lokale për udhëtarët që duan Shqipërinë të ndihëjë e lehtë.",
+            whoDesc: "Rent a Car ndihmon vizitorët të lëvizin midis Aeroportit të Tiranës, Durrësit, Vlorës, Sarandës dhe rrugëve malore me makina të pastra, çmime të qarta dhe këshilla praktike rrugësh nga një ekip lokal.",
+            c1class: "Dorëzim në aeroport", c1h3: "Marrje e shpejtë",
+            c1desc: "Takohuni me makinën në terminal ose qendrë qyteti me dokumentet e kontrolluar para se të mbërrënini.",
+            c2class: "Kujdesi i flotës", c2h3: "Makina të pastra dhe gati",
+            c2desc: "Makina qyteti, SUV-e, furgone dhe modele premium të përgatitjur për rrugët shqiptare dhe nevojat e bagazheve.",
+            c3class: "Mbështejte rrugësh", c3h3: "Udhëzim lokal",
+            c3desc: "Merrni këshilla të thjeshta për drejtimin e Rivierës, rrugët e Thethit, parkimin, mbërritjet me ferry dhe opsionet e kthimit.",
+            whyH2: "Pse të na zgjidhni",
+            w1h3: "Kilometrazh i Pakufizuar", w1desc: "Eksploroni Shqipërinë nga bregdeti deri në male me liri të plotë dhe rrugë ditore fleksibël.",
+            w2h3: "Asistencë Udhëtimi", w2desc: "Ju mbështesim kurdoherë që ndodh diçka e papritur, nga pyetjet e rrugës deri te ndihma anës rrugës.",
+            w3h3: "Mbrojtje e Plotë", w3desc: "Drejtoni me besim duke përdorur opsione të qarta sigurimi dhe kushte qiraje të thjeshta.",
+            w4h3: "Rezervim i Lehtë", w4desc: "Rezervoni makinën tuaj me qira në Shqipëri brenda minutash me çmime të qarta dhe pa tarifa të fshehura.",
+        },
+        contact: {
+            eyebrow: "Kontaktet", h1: "Kontaktet",
+            officesH2: "Zyrat Tona", officesDesc: "Gjeni vendndodhjen që ju shërben më mirë.",
+            contactEyebrow: "Kontakt",
+            contactH2: "Rezervoni, ndryshoni ose konfirmoni qiranë tuaj.",
+            contactDesc: "Ekipi ynë mund të ndihmojë me marrjen në aeroport, cohët e dorëzimit, pyetjet e kalimit të kufirit dhe disponueshmërinë e makinës.",
+            fullName: "Emri i plotë", email: "Email", phone: "Telefon / WhatsApp", message: "Mesazhi",
+            sendBtn: "Dërgo Mesazhin", sending: "Po dërgon…",
+            sent: "Mesazhi u dërgu! Do t’ju kthejmë përgjigje së shpejti.",
+            formError: "Diçka shkoi keq. Ju lutemi provoni përsëri.",
+        },
+        faq: {
+            eyebrow: "Oferta & FAQ", h1: "Çmime më të mira për udhëtime më të gjata rrugësh në Shqipëri.",
+            offersEyebrow: "Ofertat aktuale", offersH2: "Kurseni më shumë në udhëtimin tuaj",
+            faqEyebrow: "FAQ", faqH2: "Pyetje të shpeshta",
+            offers: [
+                { title: "Kursyes Javor", desc: "Kurseni 12% në qiratë prej shtatë ditësh ose më shumë. Perfekte për udhëtime nga bregdeti në male." },
+                { title: "Korridor i Shpejtë Aeroporti", desc: "Dërgoni dokumentet para mbërritjes dhe makina juaj mund të jetë gati jashtë daljes." },
+                { title: "Kthim me një Drejtim", desc: "Merrni në Tiranë dhe ktheni në Vlorë, Sarandë, Durrës ose Shkodër." },
+            ],
+            faqs: [
+                { q: "Çfarë dokumentesh duhen për të marrë me qira një makinë?", a: "Leje e vlefshme drejtimi, pasaportë ose letërnjoftim kombëtar dhe kartë krediti ose debiti për depozitën." },
+                { q: "A ka një moshë minimale qiraje?", a: "Shoferët duhet të jenë të pakten 21 vjeç. Shoferët nnë 25 vjeç mund të ngarkohen me tarifë shtese." },
+                { q: "Mund ta kthej makinën në një vendndodhje tjetër?", a: "Po. Ofrojmë qira me një drejtim midis Tiranës, Durrësit, Vlorës, Sarandës dhe Shkodërs." },
+                { q: "A është kilometrazhi i pakufizuar?", a: "Të gjitha qiratë tona përfshijnë kilometrazh të pakufizuar — drejtoni sa të dëshironi nëpër Shqipëri." },
+                { q: "Si funksionon zbritja online?", a: "Rezervoni dhe paguani online për të marrë automatikisht 15% zbritje nga totali i qirasë." },
+                { q: "Çfarë politike karburanti zbatohet?", a: "Makinat jepen me rezervuar plot dhe duhet të kthehen plot. Tarifat e karburantit zbatohen nëse nuk rimbushet." },
+            ],
+        },
+        blog: {
+            eyebrow: "Guida drejtimi", h1: "Rrugë që e bëjnë qiranë e makinës të vlefshme.",
+            routesEyebrow: "Rrugë të kuratoruara", routesH2: "Shqipëria me makinë",
+            totalDrive: "shëtitje totale", idealTrip: "udhëtim ideal",
+            tipsEyebrow: "Këshilla drejtimi", tipsH2: "Dini para se të niseni",
+            rentForRoute: "Merrni makinë për këtë rrugë",
+            routes: [
+                { title: "Tirana deri te Riviera Shqiptare", distance: "305 km", duration: "4–7 ditë", desc: "Kaloni nëpër Vlorë, ngjituni në Llogarã, ndaloni në Dhërmi dhe mbaroni pranë Ksamilit me gjiret torquoise dhe opsione kthimi fleksibël.", highlights: ["Ndëalesë Vlorë", "Llogara (1027 m)", "Plazhi Dhërmi", "Gjire Ksamil"] },
+                { title: "Tirana deri në Theth", distance: "190 km", duration: "2–3 ditë", desc: "Drejtohuni nga veriu nëpër Shkodër dhe në Alpet Shqiptare. Thethi ofron gryka dramatike, ujëvara dhe piscinë blu.", highlights: ["Qyteti i Vjetër i Shkodërs", "Ferry i Liqenit Koman", "Lugina Valbona", "Ujëvara Theth"] },
+                { title: "Tirana deri në Berat & Gjirokastrër", distance: "260 km", duration: "2–4 ditë", desc: "Dy ‘qytetet e një mijë dritareve’ të listuara nga UNESCO në një rreth nëpër Shqipërinë qendrore dhe jugore.", highlights: ["Kalaja e Beratit", "Vinërë Cobo", "Çarshia Gjirokastrër", "Syri i Kaltër"] },
+            ],
+            tips: [
+                { h3: "Kalimet malore", p: "Llogara dhe rruga e Thethit kërkojnë besim në kthesa të ngushta. Rekomandohet SUV për të dyja." },
+                { h3: "Stacionet e karburantit", p: "Mbushni rezervuarin para se të hyni në zonat malore të largëta. Qytetet kryesore kanë shumë stacione; rrugët rurale jo." },
+                { h3: "Kthimet me një drejtim", p: "Mund të merrni në Tiranë dhe të ktheni në Vlorë, Sarandë ose Durrës. Ideal për një rrugë lineare Riviere." },
+            ],
+        },
+        footer: {
+            tagline: "Qira makinash në Tiranë, Durrës, Vlorë, Sarandë dhe më gjerë.",
+            book: "Rezervo", fleet: "Flotë", guides: "Guida", offers: "Oferta", contact: "Kontakt",
+        },
+    },
+}
+
+const LangContext = createContext(null)
+
+export const LangProvider = ({ children }) => {
+    const [lang, setLang] = useState(() => localStorage.getItem('rcar_lang') || 'en')
+
+    const toggleLang = () => {
+        setLang(l => {
+            const next = l === 'en' ? 'al' : 'en'
+            localStorage.setItem('rcar_lang', next)
+            return next
+        })
+    }
+
+    return (
+        <LangContext.Provider value={{ lang, toggleLang, t: translations[lang] }}>
+            {children}
+        </LangContext.Provider>
+    )
+}
+
+export const useLang = () => useContext(LangContext)

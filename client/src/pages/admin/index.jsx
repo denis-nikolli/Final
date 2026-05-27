@@ -2,6 +2,8 @@ import "./index.css"
 import { useState, useEffect, useCallback } from "react"
 import Navigation from "../../components/navigation"
 import Footer from "../../components/footer"
+import { useAuth } from "../../context/AuthContext"
+import usePageTitle from "../../hooks/usePageTitle"
 
 const STATUS_OPTIONS = ["new", "confirmed", "cancelled", "completed"]
 
@@ -17,7 +19,8 @@ const StatusBadge = ({ status }) => (
 )
 
 const Admin = () => {
-    const [user, setUser] = useState(null)
+    const { user, login, logout } = useAuth()
+    usePageTitle("Admin")
     const [loginForm, setLoginForm] = useState({ identifier: "", password: "" })
     const [loginError, setLoginError] = useState("")
     const [loginLoading, setLoginLoading] = useState(false)
@@ -57,7 +60,7 @@ const Admin = () => {
             const json = await res.json()
             if (!res.ok) { setLoginError(json.message || "Login failed"); return }
             if (json.user.role !== "admin") { setLoginError("This account does not have admin access."); return }
-            setUser(json.user)
+            login(json.user)
         } catch {
             setLoginError("Something went wrong.")
         } finally {
@@ -140,6 +143,25 @@ const Admin = () => {
         )
     }
 
+    if (user.role !== "admin") {
+        return (
+            <>
+                <Navigation />
+                <div className="admin-login-page">
+                    <div className="admin-login-card">
+                        <p className="eyebrow">Admin</p>
+                        <h1>Access denied</h1>
+                        <p className="admin-login-sub">Your account does not have admin privileges.</p>
+                        <button className="primary-btn" type="button" onClick={logout} style={{ marginTop: 24 }}>
+                            Sign out
+                        </button>
+                    </div>
+                </div>
+                <Footer />
+            </>
+        )
+    }
+
     return (
         <>
             <Navigation />
@@ -149,7 +171,7 @@ const Admin = () => {
                     <p className="eyebrow">Admin</p>
                     <h1>Dashboard</h1>
                 </div>
-                <button className="admin-logout-btn" onClick={() => setUser(null)}>Sign out</button>
+                <button className="admin-logout-btn" onClick={logout}>Sign out</button>
             </header>
 
             <main className="admin-page">
@@ -168,16 +190,17 @@ const Admin = () => {
                             {[
                                 { key: "requests", label: `Rental Requests (${data.rentalRequests.count})` },
                                 { key: "reservations", label: `Reservations (${data.reservations.count})` },
+                                { key: "contacts", label: `Contact Messages (${data.contacts?.count ?? 0})` },
                                 { key: "cars", label: `Cars (${data.cars.count})` },
                                 { key: "users", label: `Users (${data.users.count})` },
-                            ].map(t => (
+                            ].map(tabItem => (
                                 <button
-                                    key={t.key}
-                                    className={`admin-tab${tab === t.key ? " is-active" : ""}`}
-                                    onClick={() => setTab(t.key)}
+                                    key={tabItem.key}
+                                    className={`admin-tab${tab === tabItem.key ? " is-active" : ""}`}
+                                    onClick={() => setTab(tabItem.key)}
                                     type="button"
                                 >
-                                    {t.label}
+                                    {tabItem.label}
                                 </button>
                             ))}
                         </div>
@@ -192,15 +215,8 @@ const Admin = () => {
                                         <table className="admin-table">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Car</th>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Phone</th>
-                                                    <th>Location</th>
-                                                    <th>Pickup</th>
-                                                    <th>Return</th>
-                                                    <th>Status</th>
+                                                    <th>#</th><th>Car</th><th>Name</th><th>Email</th>
+                                                    <th>Phone</th><th>Location</th><th>Pickup</th><th>Return</th><th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -249,14 +265,8 @@ const Admin = () => {
                                         <table className="admin-table">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Car</th>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Location</th>
-                                                    <th>Pickup</th>
-                                                    <th>Return</th>
-                                                    <th>Status</th>
+                                                    <th>#</th><th>Car</th><th>Name</th><th>Email</th>
+                                                    <th>Location</th><th>Pickup</th><th>Return</th><th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -294,6 +304,37 @@ const Admin = () => {
                             </div>
                         )}
 
+                        {tab === "contacts" && (
+                            <div className="admin-panel">
+                                <h2>Contact Messages</h2>
+                                {(data.contacts?.items?.length ?? 0) === 0 ? (
+                                    <p className="admin-empty">No contact messages yet. They appear here when someone submits the Contact form.</p>
+                                ) : (
+                                    <div className="admin-table-wrap">
+                                        <table className="admin-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Message</th><th>Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {data.contacts.items.map(c => (
+                                                    <tr key={c.id}>
+                                                        <td>{c.id}</td>
+                                                        <td><strong>{c.name}</strong></td>
+                                                        <td>{c.email}</td>
+                                                        <td>{c.phone || "—"}</td>
+                                                        <td style={{ maxWidth: 320, whiteSpace: 'pre-wrap' }}>{c.message}</td>
+                                                        <td>{new Date(c.createdAt).toLocaleDateString()}</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
                         {tab === "cars" && (
                             <div className="admin-panel">
                                 <h2>Fleet Management</h2>
@@ -301,15 +342,8 @@ const Admin = () => {
                                     <table className="admin-table">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Type</th>
-                                                <th>Transmission</th>
-                                                <th>Seats</th>
-                                                <th>Bags</th>
-                                                <th>Price/day</th>
-                                                <th>Available</th>
-                                                <th></th>
+                                                <th>#</th><th>Name</th><th>Type</th><th>Transmission</th>
+                                                <th>Seats</th><th>Bags</th><th>Price/day</th><th>Available</th><th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -362,12 +396,7 @@ const Admin = () => {
                                     <table className="admin-table">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Username</th>
-                                                <th>Email</th>
-                                                <th>Role</th>
-                                                <th>Joined</th>
+                                                <th>#</th><th>Name</th><th>Username</th><th>Email</th><th>Role</th><th>Joined</th>
                                             </tr>
                                         </thead>
                                         <tbody>

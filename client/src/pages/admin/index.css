@@ -4,8 +4,8 @@
     place-items: center;
     padding: 40px 20px;
     background:
-        linear-gradient(rgba(255, 250, 246, 0.92), rgba(255, 250, 246, 0.94)),
-        repeating-radial-gradient(circle at 18% 10%, rgba(217, 4, 41, 0.045) 0, rgba(217, 4, 41, 0.045) 1px, transparent 2px, transparent 42px);
+        linear-gradient(rgba(244, 245, 247, 0.96), rgba(240, 242, 245, 0.98)),
+        repeating-radial-gradient(circle at 18% 10%, rgba(16, 17, 20, 0.03) 0, rgba(16, 17, 20, 0.03) 1px, transparent 2px, transparent 42px);
 }
 
 .admin-login-card {
@@ -187,7 +187,7 @@
 
 .admin-panel h2 {
     font-size: clamp(24px, 3vw, 36px);
-    color: #210006;
+    color: var(--ink);
 }
 
 .admin-empty {
@@ -203,6 +203,7 @@
 
 .admin-table-wrap {
     overflow-x: auto;
+    overflow: hidden;
     border: 1px solid var(--line);
     border-radius: 16px;
     background: white;
@@ -241,7 +242,7 @@
 }
 
 .admin-table strong {
-    color: #210006;
+    color: var(--ink);
     font-size: 15px;
 }
 

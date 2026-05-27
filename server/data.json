@@ -424,6 +424,19 @@
       "pickupDate": "2026-05-29",
       "returnDate": "2026-05-31",
       "location": "Tirana Airport"
+    },
+    {
+      "id": 2,
+      "createdAt": "2026-05-27T16:06:17.646Z",
+      "status": "new",
+      "carId": 1,
+      "carName": "Volkswagen Polo",
+      "name": "fw",
+      "email": "d@mial.com",
+      "phone": "32",
+      "pickupDate": "2026-05-28",
+      "returnDate": "2026-05-30",
+      "location": "Tirana Airport"
     }
   ]
 }

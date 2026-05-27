@@ -10,13 +10,7 @@
     overflow: hidden;
     margin-top: -82px;
     padding: 140px clamp(20px, 8vw, 120px) 120px;
-    background:
-        linear-gradient(180deg, rgba(255, 245, 245, 0.92), rgba(255, 250, 246, 1)),
-        repeating-radial-gradient(circle at 20% 20%,
-            rgba(217, 4, 41, 0.07) 0,
-            rgba(217, 4, 41, 0.07) 1px,
-            transparent 2px,
-            transparent 38px);
+    background: linear-gradient(180deg, #f0f2f5, #e8eaed);
 }
 
 .hero-card {
@@ -28,11 +22,9 @@
     align-items: center;
     gap: 46px;
     padding: clamp(34px, 5vw, 74px);
-    background:
-        linear-gradient(135deg, rgba(217, 4, 41, 0.13) 0 28%, transparent 28%),
-        white;
+    background: white;
     border-radius: 34px;
-    box-shadow: 0 28px 80px rgba(217, 4, 41, 0.12);
+    box-shadow: 0 28px 80px rgba(16, 17, 20, 0.1);
 }
 
 .hero-copy-block {
@@ -76,8 +68,8 @@ h1 span {
 .image-placeholder {
     display: grid;
     place-items: center;
-    border: 2px dashed rgba(217, 4, 41, 0.28);
-    background: rgba(247, 239, 231, 0.72);
+    border: 2px dashed rgba(16, 17, 20, 0.18);
+    background: #eef0f3;
     color: var(--muted);
     font-size: 14px;
     font-weight: 900;

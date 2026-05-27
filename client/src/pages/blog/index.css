@@ -30,7 +30,7 @@
 
 .route-card-body h3 {
     font-size: clamp(22px, 2.5vw, 32px);
-    color: #210006;
+    color: var(--ink);
 }
 
 .route-card-desc {
@@ -66,6 +66,11 @@
     gap: 8px;
     margin-top: 4px;
     list-style: none;
+}
+
+.route-cta {
+    display: inline-flex;
+    margin-top: 20px;
 }
 
 .route-highlights li {

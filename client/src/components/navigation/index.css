@@ -123,6 +123,37 @@
     background: rgba(217, 4, 41, 0.06);
 }
 
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-greeting {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.logout-btn {
+    min-height: 40px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: white;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.logout-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
 .language-btn {
     gap: 10px;
     padding: 0 14px;

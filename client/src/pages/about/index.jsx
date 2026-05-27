@@ -1,28 +1,29 @@
 import "./index.css"
 import Navigation from "../../components/navigation"
 import Footer from "../../components/footer"
+import { useLang } from "../../context/LangContext"
+import usePageTitle from "../../hooks/usePageTitle"
 
 const About = () => {
+    const { t } = useLang()
+    usePageTitle("About Us")
     return (
         <>
             <Navigation />
 
             <header className="page-hero about-hero">
                 <div className="page-hero-content">
-                    <p className="eyebrow">About Us</p>
-                    <h1>About Us</h1>
+                    <p className="eyebrow">{t.about.eyebrow}</p>
+                    <h1>{t.about.h1}</h1>
                 </div>
             </header>
 
             <main className="page-content about-page">
                 <section className="about-story">
                     <div>
-                        <p className="eyebrow">Who we are</p>
-                        <h2>Local car rental for travelers who want Albania to feel easy.</h2>
-                        <p>
-                            Rent a Car helps visitors move between Tirana Airport, Durres, Vlore, Sarande, and the mountain routes
-                            with clean cars, clear pricing, and practical route advice from a local team.
-                        </p>
+                        <p className="eyebrow">{t.about.whoEyebrow}</p>
+                        <h2>{t.about.whoH2}</h2>
+                        <p>{t.about.whoDesc}</p>
                     </div>
                     <div className="about-image-placeholder image-placeholder">Image placeholder</div>
                 </section>
@@ -31,54 +32,51 @@ const About = () => {
                     <article className="stack-card">
                         <div className="stack-image-placeholder">Image placeholder</div>
                         <div>
-                            <p className="car-class">Airport handover</p>
-                            <h3>Fast pickup</h3>
-                            <p>Meet the car at the terminal or city center with documents checked before you arrive.</p>
+                            <p className="car-class">{t.about.c1class}</p>
+                            <h3>{t.about.c1h3}</h3>
+                            <p>{t.about.c1desc}</p>
                         </div>
                     </article>
                     <article className="stack-card">
                         <div className="stack-image-placeholder">Image placeholder</div>
                         <div>
-                            <p className="car-class">Fleet care</p>
-                            <h3>Clean, ready cars</h3>
-                            <p>City cars, SUVs, vans, and premium models prepared for Albanian roads and luggage needs.</p>
+                            <p className="car-class">{t.about.c2class}</p>
+                            <h3>{t.about.c2h3}</h3>
+                            <p>{t.about.c2desc}</p>
                         </div>
                     </article>
                     <article className="stack-card">
                         <div className="stack-image-placeholder">Image placeholder</div>
                         <div>
-                            <p className="car-class">Route support</p>
-                            <h3>Local guidance</h3>
-                            <p>Get simple advice for Riviera drives, Theth routes, parking, ferry arrivals, and return options.</p>
+                            <p className="car-class">{t.about.c3class}</p>
+                            <h3>{t.about.c3h3}</h3>
+                            <p>{t.about.c3desc}</p>
                         </div>
                     </article>
                 </section>
 
                 <section className="why-section">
-                    <h2>Why choose us</h2>
+                    <h2>{t.about.whyH2}</h2>
                     <div className="why-grid">
                         <article className="why-card">
                             <span className="why-icon" aria-hidden="true">AD</span>
-                            <h3>Unlimited Mileage</h3>
-                            <p>Explore Albania from coast to mountains with total freedom and flexible daily routes.</p>
+                            <h3>{t.about.w1h3}</h3>
+                            <p>{t.about.w1desc}</p>
                         </article>
-
                         <article className="why-card">
                             <span className="why-icon" aria-hidden="true">AD</span>
-                            <h3>Travel Assistance</h3>
-                            <p>We support you whenever the unexpected happens, from route questions to roadside help.</p>
+                            <h3>{t.about.w2h3}</h3>
+                            <p>{t.about.w2desc}</p>
                         </article>
-
                         <article className="why-card">
                             <span className="why-icon" aria-hidden="true">AD</span>
-                            <h3>Complete Protection</h3>
-                            <p>Drive with confidence using clear insurance options and straightforward rental terms.</p>
+                            <h3>{t.about.w3h3}</h3>
+                            <p>{t.about.w3desc}</p>
                         </article>
-
                         <article className="why-card">
                             <span className="why-icon" aria-hidden="true">AD</span>
-                            <h3>Effortless Booking</h3>
-                            <p>Book your Albania rental car in minutes with clear pricing and no hidden fees.</p>
+                            <h3>{t.about.w4h3}</h3>
+                            <p>{t.about.w4desc}</p>
                         </article>
                     </div>
                 </section>

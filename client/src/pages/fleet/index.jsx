@@ -3,6 +3,11 @@ import { useState, useEffect } from "react"
 import { useSearchParams } from "react-router"
 import Navigation from "../../components/navigation"
 import Footer from "../../components/footer"
+import { useLang } from "../../context/LangContext"
+import usePageTitle from "../../hooks/usePageTitle"
+import CarIllustration from "../../components/carillustration"
+
+const today = new Date().toISOString().split('T')[0]
 
 const LOCATIONS = [
     "Tirana Airport",
@@ -23,6 +28,8 @@ const PAGE_SIZE = 9
 
 const Fleet = () => {
     const [searchParams] = useSearchParams()
+    const { t } = useLang()
+    usePageTitle("Fleet")
     const [cars, setCars] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -30,7 +37,12 @@ const Fleet = () => {
     const [locationFilter, setLocationFilter] = useState(searchParams.get("location") || "")
     const [page, setPage] = useState(1)
     const [rentCar, setRentCar] = useState(null)
-    const [rentForm, setRentForm] = useState({ name: "", email: "", phone: "", pickupDate: searchParams.get("pickupDate") || "", returnDate: searchParams.get("returnDate") || "", location: searchParams.get("location") || LOCATIONS[0] })
+    const [rentForm, setRentForm] = useState({
+        name: "", email: "", phone: "",
+        pickupDate: searchParams.get("pickupDate") || "",
+        returnDate: searchParams.get("returnDate") || "",
+        location: searchParams.get("location") || LOCATIONS[0],
+    })
     const [rentStatus, setRentStatus] = useState("")
     const [rentLoading, setRentLoading] = useState(false)
 
@@ -43,7 +55,6 @@ const Fleet = () => {
                 if (typeFilter && typeFilter !== "all") params.set("type", typeFilter)
                 const discountCode = searchParams.get("discountCode")
                 if (discountCode) params.set("discountCode", discountCode)
-
                 const res = await fetch(`/api/cars?${params}`)
                 if (!res.ok) throw new Error("Failed to load cars")
                 const data = await res.json()
@@ -61,15 +72,8 @@ const Fleet = () => {
     const totalPages = Math.ceil(cars.length / PAGE_SIZE)
     const visibleCars = cars.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
-    const openRentModal = (car) => {
-        setRentCar(car)
-        setRentStatus("")
-    }
-
-    const closeRentModal = () => {
-        setRentCar(null)
-        setRentStatus("")
-    }
+    const openRentModal = (car) => { setRentCar(car); setRentStatus("") }
+    const closeRentModal = () => { setRentCar(null); setRentStatus("") }
 
     const handleRentSubmit = async (e) => {
         e.preventDefault()
@@ -79,11 +83,7 @@ const Fleet = () => {
             const res = await fetch("/api/rental-requests", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    carId: rentCar.id,
-                    carName: rentCar.name,
-                    ...rentForm,
-                }),
+                body: JSON.stringify({ carId: rentCar.id, carName: rentCar.name, ...rentForm }),
             })
             if (!res.ok) throw new Error("Failed to submit")
             setRentStatus("success")
@@ -100,8 +100,8 @@ const Fleet = () => {
 
             <header className="page-hero fleet-hero">
                 <div className="page-hero-content">
-                    <p className="eyebrow">Fleet</p>
-                    <h1>Our Fleet of Modern Rental Cars</h1>
+                    <p className="eyebrow">{t.fleet.eyebrow}</p>
+                    <h1>{t.fleet.h1}</h1>
                 </div>
             </header>
 
@@ -109,57 +109,62 @@ const Fleet = () => {
                 <section className="fleet-database" aria-label="Complete car database">
                     <div className="fleet-controls">
                         <div className="fleet-type-filters">
-                            {["all", "city", "suv", "van", "luxury"].map(t => (
+                            {["all", "city", "suv", "van", "luxury"].map(type => (
                                 <button
-                                    key={t}
-                                    className={`type-filter-btn${typeFilter === t ? " is-active" : ""}`}
-                                    onClick={() => setTypeFilter(t)}
+                                    key={type}
+                                    className={`type-filter-btn${typeFilter === type ? " is-active" : ""}`}
+                                    onClick={() => setTypeFilter(type)}
                                     type="button"
                                 >
-                                    {t === "all" ? "All Cars" : TYPE_LABELS[t]}
+                                    {type === "all" ? t.fleet.allCars : TYPE_LABELS[type]}
                                 </button>
                             ))}
                         </div>
                         <div className="fleet-location-filter">
                             <label>
-                                <span>Location</span>
+                                <span>{t.fleet.locationLabel}</span>
                                 <select value={locationFilter} onChange={e => setLocationFilter(e.target.value)}>
-                                    <option value="">All locations</option>
+                                    <option value="">{t.fleet.allLocations}</option>
                                     {LOCATIONS.map(l => <option key={l}>{l}</option>)}
                                 </select>
                             </label>
                         </div>
                     </div>
 
-                    {loading && <p className="fleet-status">Loading cars&hellip;</p>}
-                    {error && <p className="fleet-status fleet-error">Could not load cars. Make sure the backend is running.</p>}
+                    {loading && <p className="fleet-status">{t.fleet.loading}</p>}
+                    {error && <p className="fleet-status fleet-error">{t.fleet.loadError}</p>}
 
                     {!loading && !error && (
                         <>
-                            <p className="fleet-count">{cars.length} car{cars.length !== 1 ? "s" : ""} available</p>
+                            <p className="fleet-count">
+                                {cars.length} {cars.length !== 1 ? t.fleet.carsLabelPlural : t.fleet.carsLabel} {t.fleet.available}
+                            </p>
                             {cars.length === 0 ? (
-                                <p className="fleet-status">No cars match your filters.</p>
+                                <p className="fleet-status">{t.fleet.noMatch}</p>
                             ) : (
                                 <div className="fleet-grid">
                                     {visibleCars.map(car => (
                                         <article key={car.id} className="car-card">
-                                            <div className="car-image-placeholder">Image placeholder</div>
+                                            {car.id === 1
+                                                ? <div className="car-image-illustration"><CarIllustration color="#d90429" /></div>
+                                                : <div className="car-image-placeholder">Image placeholder</div>
+                                            }
                                             <div className="card-body">
                                                 <p className="car-class">{TYPE_LABELS[car.type] || car.type}</p>
                                                 <h3 className="card-title">{car.name}</h3>
                                                 <div className="spec-list">
                                                     <span className="badge">{car.transmission}</span>
-                                                    <span className="badge">{car.seats} seats</span>
-                                                    <span className="badge">{car.bags} bags</span>
+                                                    <span className="badge">{car.seats} {t.fleet.seats}</span>
+                                                    <span className="badge">{car.bags} {t.fleet.bags}</span>
                                                 </div>
                                                 <div className="price-row">
-                                                    <strong>EUR {car.price}/day</strong>
+                                                    <strong>EUR {car.price}{t.fleet.perDay}</strong>
                                                     <button
                                                         type="button"
                                                         className="btn btn-danger"
                                                         onClick={() => openRentModal(car)}
                                                     >
-                                                        Rent
+                                                        {t.fleet.rent}
                                                     </button>
                                                 </div>
                                             </div>
@@ -196,53 +201,52 @@ const Fleet = () => {
 
                         {rentStatus === "success" ? (
                             <div className="rental-success">
-                                <p className="eyebrow">Request sent</p>
-                                <h2>We&apos;ll be in touch shortly.</h2>
-                                <p>Your rental request for <strong>{rentCar.name}</strong> has been received. Our team will confirm your booking by email.</p>
-                                <button className="primary-btn" type="button" onClick={closeRentModal} style={{ marginTop: 24 }}>Close</button>
+                                <p className="eyebrow">{t.fleet.successEyebrow}</p>
+                                <h2>{t.fleet.successH2}</h2>
+                                <p>{t.fleet.successDesc1} <strong>{rentCar.name}</strong> {t.fleet.successDesc2}</p>
+                                <button className="primary-btn" type="button" onClick={closeRentModal} style={{ marginTop: 24 }}>{t.fleet.closeBtn}</button>
                             </div>
                         ) : (
                             <>
                                 <div className="rental-form-heading">
-                                    <p className="eyebrow">Rental request</p>
+                                    <p className="eyebrow">{t.fleet.modalEyebrow}</p>
                                     <h2>{rentCar.name}</h2>
-                                    <p>EUR {rentCar.price}/day &mdash; {TYPE_LABELS[rentCar.type]}</p>
+                                    <p>EUR {rentCar.price}{t.fleet.perDay} &mdash; {TYPE_LABELS[rentCar.type]}</p>
                                 </div>
-
                                 <form className="rental-form" onSubmit={handleRentSubmit}>
                                     <label>
-                                        <span>Full name</span>
+                                        <span>{t.fleet.fullName}</span>
                                         <input type="text" required value={rentForm.name} onChange={e => setRentForm(f => ({ ...f, name: e.target.value }))} />
                                     </label>
                                     <label>
-                                        <span>Email</span>
+                                        <span>{t.fleet.email}</span>
                                         <input type="email" required value={rentForm.email} onChange={e => setRentForm(f => ({ ...f, email: e.target.value }))} />
                                     </label>
                                     <label>
-                                        <span>Phone / WhatsApp</span>
+                                        <span>{t.fleet.phone}</span>
                                         <input type="tel" value={rentForm.phone} onChange={e => setRentForm(f => ({ ...f, phone: e.target.value }))} />
                                     </label>
                                     <label>
-                                        <span>Pick-up location</span>
+                                        <span>{t.fleet.pickupLocation}</span>
                                         <select value={rentForm.location} onChange={e => setRentForm(f => ({ ...f, location: e.target.value }))}>
                                             {LOCATIONS.map(l => <option key={l}>{l}</option>)}
                                         </select>
                                     </label>
                                     <label>
-                                        <span>Pick-up date</span>
-                                        <input type="date" required value={rentForm.pickupDate} onChange={e => setRentForm(f => ({ ...f, pickupDate: e.target.value }))} />
+                                        <span>{t.fleet.pickupDate}</span>
+                                        <input type="date" required min={today} value={rentForm.pickupDate} onChange={e => setRentForm(f => ({ ...f, pickupDate: e.target.value, returnDate: f.returnDate && f.returnDate < e.target.value ? e.target.value : f.returnDate }))} />
                                     </label>
                                     <label>
-                                        <span>Return date</span>
-                                        <input type="date" required value={rentForm.returnDate} onChange={e => setRentForm(f => ({ ...f, returnDate: e.target.value }))} />
+                                        <span>{t.fleet.returnDate}</span>
+                                        <input type="date" required min={rentForm.pickupDate || today} value={rentForm.returnDate} onChange={e => setRentForm(f => ({ ...f, returnDate: e.target.value }))} />
                                     </label>
                                     <div className="rental-form-wide">
                                         <button className="primary-btn" type="submit" disabled={rentLoading}>
-                                            {rentLoading ? "Sending…" : "Submit Request"}
+                                            {rentLoading ? t.fleet.submitting : t.fleet.submitBtn}
                                         </button>
                                         {rentStatus === "error" && (
                                             <p className="rental-form-status" style={{ color: "var(--red)", marginTop: 12 }}>
-                                                Something went wrong. Please try again.
+                                                {t.fleet.formError}
                                             </p>
                                         )}
                                     </div>
