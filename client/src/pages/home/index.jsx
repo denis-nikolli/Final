@@ -1,11 +1,12 @@
 import "./index.css"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate, Link } from "react-router"
 import Navigation from "../../components/navigation"
 import Header from "../../components/header"
 import Footer from "../../components/footer"
 import { useLang } from "../../context/LangContext"
 import usePageTitle from "../../hooks/usePageTitle"
+import AlbaniaMap from "../../components/albaniamap"
 
 const today = new Date().toISOString().split('T')[0]
 
@@ -15,6 +16,15 @@ const Home = () => {
     usePageTitle(null)
     const [discountApplied, setDiscountApplied] = useState(false)
     const [pickupDate, setPickupDate] = useState("")
+    const [featuredCars, setFeaturedCars] = useState([])
+    const [carouselIndex, setCarouselIndex] = useState(0)
+
+    useEffect(() => {
+        fetch("/api/cars")
+            .then(r => r.json())
+            .then(data => setFeaturedCars((data.results ?? data).slice(0, 5)))
+            .catch(() => {})
+    }, [])
 
     const handleBooking = (e) => {
         e.preventDefault()
@@ -61,21 +71,6 @@ const Home = () => {
                     </p>
                 </section>
 
-                <section className="discount-banner" aria-label="Online booking discount">
-                    <p>{t.home.bannerTag}</p>
-                    <div>
-                        <h2>{t.home.bannerH2}</h2>
-                        <span>{t.home.bannerDesc}</span>
-                    </div>
-                    <button
-                        className="primary-btn"
-                        type="button"
-                        onClick={() => setDiscountApplied(true)}
-                        disabled={discountApplied}
-                    >
-                        {discountApplied ? t.home.appliedBtn : t.home.claimBtn}
-                    </button>
-                </section>
 
                 <section className="section fleet-section" id="fleet">
                     <div className="section-heading">
@@ -86,68 +81,65 @@ const Home = () => {
                         <Link to="/fleet">{t.home.viewAll}</Link>
                     </div>
 
-                    <div className="fleet-grid">
-                        <article data-car-type="city" className="car-card">
-                            <div className="car-image-placeholder">Image placeholder</div>
-                            <div className="card-body">
-                                <p className="car-class">{t.home.cityLabel}</p>
-                                <h3 className="card-title">Volkswagen Polo</h3>
-                                <p className="car-detail">Tirana parking, couples, short coastal drives</p>
-                                <div className="spec-list">
-                                    <span className="badge">Automatic</span>
-                                    <span className="badge">5 seats</span>
-                                    <span className="badge">2 bags</span>
-                                    <span className="badge">Petrol</span>
-                                </div>
-                                <div className="price-row">
-                                    <strong>EUR 32/day</strong>
-                                    <Link to="/fleet" className="btn btn-danger">{t.home.rent}</Link>
-                                </div>
-                            </div>
-                        </article>
+                    <div className="carousel-wrapper">
+                        <button
+                            className="carousel-btn carousel-prev"
+                            type="button"
+                            onClick={() => setCarouselIndex(i => Math.max(0, i - 1))}
+                            disabled={carouselIndex === 0}
+                            aria-label="Previous"
+                        >&#8592;</button>
 
-                        <article data-car-type="city" className="car-card">
-                            <div className="car-image-placeholder">Image placeholder</div>
-                            <div className="card-body">
-                                <p className="car-class">{t.home.cityLabel}</p>
-                                <h3 className="card-title">Toyota Yaris Hybrid</h3>
-                                <p className="car-detail">Low fuel use, city routes, airport handovers</p>
-                                <div className="spec-list">
-                                    <span className="badge">Automatic</span>
-                                    <span className="badge">5 seats</span>
-                                    <span className="badge">2 bags</span>
-                                    <span className="badge">Hybrid</span>
-                                </div>
-                                <div className="price-row">
-                                    <strong>EUR 36/day</strong>
-                                    <Link to="/fleet" className="btn btn-danger">{t.home.rent}</Link>
-                                </div>
-                            </div>
-                        </article>
+                        <div className="carousel-track">
+                            {featuredCars.slice(carouselIndex, carouselIndex + 3).map(car => (
+                                <article key={car.id} className="car-card">
+                                    {car.image
+                                        ? <div className="car-image"><img src={car.image} alt={car.name} /></div>
+                                        : <div className="car-image-placeholder">No image</div>
+                                    }
+                                    <div className="card-body">
+                                        <p className="car-class">{car.type}</p>
+                                        <h3 className="card-title">{car.name}</h3>
+                                        <div className="spec-list">
+                                            <span className="badge">{car.transmission}</span>
+                                            <span className="badge">{car.seats} seats</span>
+                                            <span className="badge">{car.fuel}</span>
+                                        </div>
+                                        <div className="price-row">
+                                            <strong>EUR {car.price}/day</strong>
+                                            <Link to="/fleet" className="btn btn-danger">{t.home.rent}</Link>
+                                        </div>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
 
-                        <article data-car-type="suv" className="car-card">
-                            <div className="car-image-placeholder">Image placeholder</div>
-                            <div className="card-body">
-                                <p className="car-class">{t.home.sedanLabel}</p>
-                                <h3 className="card-title">Skoda Octavia</h3>
-                                <p className="car-detail">Business trips, Berat, Gjirokaster, family luggage</p>
-                                <div className="spec-list">
-                                    <span className="badge">Automatic</span>
-                                    <span className="badge">5 seats</span>
-                                    <span className="badge">3 bags</span>
-                                    <span className="badge">Diesel</span>
-                                </div>
-                                <div className="price-row">
-                                    <strong>EUR 44/day</strong>
-                                    <Link to="/fleet" className="btn btn-danger">{t.home.rent}</Link>
-                                </div>
-                            </div>
-                        </article>
+                        <button
+                            className="carousel-btn carousel-next"
+                            type="button"
+                            onClick={() => setCarouselIndex(i => Math.min(featuredCars.length - 3, i + 1))}
+                            disabled={carouselIndex >= featuredCars.length - 3}
+                            aria-label="Next"
+                        >&#8594;</button>
+                    </div>
+
+                    <div className="carousel-dots">
+                        {Array.from({ length: featuredCars.length - 2 }, (_, i) => (
+                            <button
+                                key={i}
+                                className={`carousel-dot${carouselIndex === i ? " is-active" : ""}`}
+                                type="button"
+                                onClick={() => setCarouselIndex(i)}
+                                aria-label={`Go to slide ${i + 1}`}
+                            />
+                        ))}
                     </div>
                 </section>
 
                 <section className="route-band" id="routes">
-                    <div className="route-map" aria-label="Map from Tirana to the Albanian Riviera"></div>
+                    <div className="route-map" aria-label="Map from Tirana to the Albanian Riviera">
+                        <AlbaniaMap />
+                    </div>
                     <div className="route-content">
                         <p className="eyebrow">{t.home.routeEyebrow}</p>
                         <h2>{t.home.routeH2}</h2>
@@ -184,28 +176,32 @@ const Home = () => {
                 </section>
 
                 <section className="reviews-section" id="reviews">
-                    <div className="section-heading">
+                    <div className="reviews-header">
                         <div>
-                            <p className="eyebrow">{t.home.reviewsEyebrow}</p>
-                            <h2>{t.home.reviewsH2}</h2>
+                            <p className="eyebrow" style={{ color: "rgba(255,255,255,0.7)" }}>{t.home.reviewsEyebrow}</p>
+                            <h2 className="reviews-title">{t.home.reviewsH2}</h2>
                         </div>
+                        <p className="reviews-intro">Thousands of travellers trust us every year. Discover real experiences from guests who explored Albania with comfort, safety, and our friendly service.</p>
                     </div>
-                    <div className="review-grid">
-                        <article>
-                            <strong>{t.home.r1title}</strong>
-                            <p>{t.home.r1body}</p>
-                            <span>{t.home.r1name}</span>
-                        </article>
-                        <article>
-                            <strong>{t.home.r2title}</strong>
-                            <p>{t.home.r2body}</p>
-                            <span>{t.home.r2name}</span>
-                        </article>
-                        <article>
-                            <strong>{t.home.r3title}</strong>
-                            <p>{t.home.r3body}</p>
-                            <span>{t.home.r3name}</span>
-                        </article>
+                    <div className="review-scroll">
+                        {[
+                            { name: "Elena M.", color: "#7c5cbf", body: "The Polo was perfect for our Tirana stay. Airport pickup took ten minutes and the team marked every stop we wanted on the map." },
+                            { name: "Arben K.", color: "#2a9d8f", body: "No surprise charges. We drove from Tirana to Sarande and returned the car in Vlore. Very smooth experience overall." },
+                            { name: "Julia R.", color: "#e07b4a", body: "Great car, fast replies, and the Riviera route advice was genuinely useful. The photos finally match the trip!" },
+                            { name: "Marco T.", color: "#457b9d", body: "Clean car, easy pickup at Tirana Airport. Staff was very helpful with route suggestions for Berat and Gjirokaster." },
+                            { name: "Sarah L.", color: "#2d6a4f", body: "Loved the flexibility of returning in a different city. Made our Riviera road trip so much easier. Highly recommend!" },
+                        ].map(r => (
+                            <article key={r.name} className="review-card">
+                                <div className="review-top">
+                                    <div className="review-avatar" style={{ background: r.color }}>{r.name[0]}</div>
+                                    <div>
+                                        <strong className="review-name">{r.name}</strong>
+                                        <div className="review-stars">★★★★★</div>
+                                    </div>
+                                </div>
+                                <p className="review-body">{r.body}</p>
+                            </article>
+                        ))}
                     </div>
                 </section>
             </main>

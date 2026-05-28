@@ -54,7 +54,7 @@ const users = [
     name: "Admin",
     username: "admin",
     email: "admin@albaniadrive.com",
-    password: "admin123",
+    password: "admin",
     role: "admin",
     createdAt: new Date().toISOString(),
   },

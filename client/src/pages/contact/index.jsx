@@ -47,7 +47,7 @@ const Contact = () => {
                     </div>
                     <div className="office-list">
                         <article className="office-card is-featured">
-                            <h3>Rent a Car &mdash; Tirana Airport Main Desk</h3>
+                            <h3>Car Rental &mdash; Tirana Airport Main Desk</h3>
                             <p>Tirana International Airport, Rinas, 1504, Albania</p>
                             <div>
                                 <a href="tel:+355694001122">+355 69 400 1122</a>
@@ -55,7 +55,7 @@ const Contact = () => {
                             </div>
                         </article>
                         <article className="office-card">
-                            <h3>Rent a Car &mdash; Tirana City Center</h3>
+                            <h3>Car Rental &mdash; Tirana City Center</h3>
                             <p>Skanderbeg Square, Tirana, Albania</p>
                             <div>
                                 <a href="tel:+355694001122">+355 69 400 1122</a>
@@ -63,7 +63,7 @@ const Contact = () => {
                             </div>
                         </article>
                         <article className="office-card">
-                            <h3>Rent a Car &mdash; Sarande Ferry Terminal</h3>
+                            <h3>Car Rental &mdash; Sarande Ferry Terminal</h3>
                             <p>Port of Sarande, Sarande, Albania</p>
                             <div>
                                 <a href="tel:+355694001122">+355 69 400 1122</a>

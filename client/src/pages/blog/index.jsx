@@ -29,25 +29,28 @@ const Blog = () => {
                     </div>
 
                     <div className="route-cards">
-                        {t.blog.routes.map(route => (
-                            <article key={route.title} className="route-card">
-                                <div className="route-card-image image-placeholder">Image placeholder</div>
-                                <div className="route-card-body">
-                                    <h3>{route.title}</h3>
-                                    <p className="route-card-desc">{route.desc}</p>
-                                    <div className="route-card-stats">
-                                        <span><strong>{route.distance}</strong> {t.blog.totalDrive}</span>
-                                        <span><strong>{route.duration}</strong> {t.blog.idealTrip}</span>
+                        {t.blog.routes.map((route, i) => {
+                            const images = ["/destinations/ksamil.jpg", "/destinations/theth.jpg", "/destinations/berat.jpg"]
+                            return (
+                                <article key={route.title} className="route-card">
+                                    <img className="route-card-image" src={images[i]} alt={route.title} />
+                                    <div className="route-card-body">
+                                        <h3>{route.title}</h3>
+                                        <p className="route-card-desc">{route.desc}</p>
+                                        <div className="route-card-stats">
+                                            <span><strong>{route.distance}</strong> {t.blog.totalDrive}</span>
+                                            <span><strong>{route.duration}</strong> {t.blog.idealTrip}</span>
+                                        </div>
+                                        <ul className="route-highlights">
+                                            {route.highlights.map(h => <li key={h}>{h}</li>)}
+                                        </ul>
+                                        <Link to="/fleet?type=suv" className="primary-btn route-cta">
+                                            {t.blog.rentForRoute}
+                                        </Link>
                                     </div>
-                                    <ul className="route-highlights">
-                                        {route.highlights.map(h => <li key={h}>{h}</li>)}
-                                    </ul>
-                                    <Link to="/fleet?type=suv" className="primary-btn route-cta">
-                                        {t.blog.rentForRoute}
-                                    </Link>
-                                </div>
-                            </article>
-                        ))}
+                                </article>
+                            )
+                        })}
                     </div>
                 </section>
 

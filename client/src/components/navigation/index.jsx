@@ -109,15 +109,15 @@ const Navigation = () => {
     return (
         <>
             <nav className="site-nav" ref={navRef}>
-                <NavLink className="brand" to="/" aria-label="Rent a Car home">
-                    <span className="brand-logo">Rent a Car</span>
+                <NavLink className="brand" to="/" aria-label="Car Rental home">
+                    <span className="brand-logo">Car Rental</span>
                 </NavLink>
 
                 <div className={`nav-links${menuOpen ? " is-open" : ""}`} id="navLinks">
                     <NavLink className={navClass} to="/" end onClick={() => setMenuOpen(false)}>{t.nav.home}</NavLink>
                     <NavLink className={navClass} to="/fleet" onClick={() => setMenuOpen(false)}>{t.nav.fleet}</NavLink>
-                    <NavLink className={navClass} to="/blog" onClick={() => setMenuOpen(false)}>{t.nav.blog}</NavLink>
                     <NavLink className={navClass} to="/about" onClick={() => setMenuOpen(false)}>{t.nav.about}</NavLink>
+                    <NavLink className={navClass} to="/blog" onClick={() => setMenuOpen(false)}>{t.nav.blog}</NavLink>
                     <NavLink className={navClass} to="/contact" onClick={() => setMenuOpen(false)}>{t.nav.contact}</NavLink>
                     <NavLink className={navClass} to="/faq" onClick={() => setMenuOpen(false)}>{t.nav.faq}</NavLink>
                 </div>
@@ -133,9 +133,11 @@ const Navigation = () => {
                             {t.nav.loginRegister}
                         </button>
                     )}
-                    <NavLink className="checkin-btn" to="/#booking">{t.nav.checkin}</NavLink>
+                    {user?.role === "admin" && (
+                        <NavLink className="checkin-btn" to="/admin">Dashboard</NavLink>
+                    )}
                     <button className="language-btn" type="button" onClick={toggleLang} aria-label="Change language">
-                        <span>{lang === 'en' ? 'EN' : 'AL'}</span>
+                        <span>{lang === 'en' ? '🇬🇧' : '🇦🇱'}</span>
                         <span className="chevron">&#8595;</span>
                     </button>
                     <button

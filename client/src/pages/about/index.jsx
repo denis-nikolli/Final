@@ -25,34 +25,6 @@ const About = () => {
                         <h2>{t.about.whoH2}</h2>
                         <p>{t.about.whoDesc}</p>
                     </div>
-                    <div className="about-image-placeholder image-placeholder">Image placeholder</div>
-                </section>
-
-                <section className="stack-grid">
-                    <article className="stack-card">
-                        <div className="stack-image-placeholder">Image placeholder</div>
-                        <div>
-                            <p className="car-class">{t.about.c1class}</p>
-                            <h3>{t.about.c1h3}</h3>
-                            <p>{t.about.c1desc}</p>
-                        </div>
-                    </article>
-                    <article className="stack-card">
-                        <div className="stack-image-placeholder">Image placeholder</div>
-                        <div>
-                            <p className="car-class">{t.about.c2class}</p>
-                            <h3>{t.about.c2h3}</h3>
-                            <p>{t.about.c2desc}</p>
-                        </div>
-                    </article>
-                    <article className="stack-card">
-                        <div className="stack-image-placeholder">Image placeholder</div>
-                        <div>
-                            <p className="car-class">{t.about.c3class}</p>
-                            <h3>{t.about.c3h3}</h3>
-                            <p>{t.about.c3desc}</p>
-                        </div>
-                    </article>
                 </section>
 
                 <section className="why-section">

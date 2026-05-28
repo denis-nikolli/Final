@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router"
 import Navigation from "../../components/navigation"
 import Footer from "../../components/footer"
 import { useLang } from "../../context/LangContext"
+import { useAuth } from "../../context/AuthContext"
 import usePageTitle from "../../hooks/usePageTitle"
 import CarIllustration from "../../components/carillustration"
 
@@ -24,11 +25,12 @@ const TYPE_LABELS = {
     luxury: "Luxury",
 }
 
-const PAGE_SIZE = 9
+const PAGE_SIZE = 6
 
 const Fleet = () => {
     const [searchParams] = useSearchParams()
     const { t } = useLang()
+    const { user } = useAuth()
     usePageTitle("Fleet")
     const [cars, setCars] = useState([])
     const [loading, setLoading] = useState(true)
@@ -72,7 +74,13 @@ const Fleet = () => {
     const totalPages = Math.ceil(cars.length / PAGE_SIZE)
     const visibleCars = cars.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
-    const openRentModal = (car) => { setRentCar(car); setRentStatus("") }
+    const openRentModal = (car) => {
+        setRentCar(car)
+        setRentStatus("")
+        if (user) {
+            setRentForm(f => ({ ...f, name: user.name || "", email: user.email || "" }))
+        }
+    }
     const closeRentModal = () => { setRentCar(null); setRentStatus("") }
 
     const handleRentSubmit = async (e) => {
@@ -145,9 +153,11 @@ const Fleet = () => {
                                 <div className="fleet-grid">
                                     {visibleCars.map(car => (
                                         <article key={car.id} className="car-card">
-                                            {car.id === 1
-                                                ? <div className="car-image-illustration"><CarIllustration color="#d90429" /></div>
-                                                : <div className="car-image-placeholder">Image placeholder</div>
+                                            {car.image
+                                                ? <div className="car-image"><img src={car.image} alt={car.name} /></div>
+                                                : car.id === 1
+                                                    ? <div className="car-image-illustration"><CarIllustration color="#d90429" /></div>
+                                                    : <div className="car-image-placeholder">Image placeholder</div>
                                             }
                                             <div className="card-body">
                                                 <p className="car-class">{TYPE_LABELS[car.type] || car.type}</p>
@@ -155,7 +165,7 @@ const Fleet = () => {
                                                 <div className="spec-list">
                                                     <span className="badge">{car.transmission}</span>
                                                     <span className="badge">{car.seats} {t.fleet.seats}</span>
-                                                    <span className="badge">{car.bags} {t.fleet.bags}</span>
+                                                    <span className="badge">{car.fuel}</span>
                                                 </div>
                                                 <div className="price-row">
                                                     <strong>EUR {car.price}{t.fleet.perDay}</strong>

@@ -12,8 +12,7 @@ const Header = () => {
                     <p className="hero-copy">{t.header.copy}</p>
                 </div>
                 <div className="hero-cars" aria-hidden="true">
-                    <div className="image-placeholder">Image placeholder</div>
-                    <div className="image-placeholder">Image placeholder</div>
+                    <img src="/cars/cars.png" alt="Our fleet" />
                 </div>
             </div>
         </header>
